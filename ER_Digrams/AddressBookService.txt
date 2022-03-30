@@ -1,0 +1,230 @@
+UC-1
+//CREATE database AddressBookService
+
+CREATE DATABASE AddressBookService;
+mysql> USE AddressBookService;
+
+UC-2
+// create AddressBook table in AddressBookService database
+
+mysql> CREATE TABLE Address_Book(
+    -> id INT unsigned NOT NULL AUTO_INCREMENT,
+    -> firstName VARCHAR(250) NOT NULL,
+    -> lastName VARCHAR(250) NOT NULL,
+    -> address VARCHAR(100) NOT NULL,
+    -> city VARCHAR(100) NOT NULL,
+    -> state VARCHAR(100) NOT NULL,
+    -> zipCode VARCHAR(100) NOT NULL,
+    -> phoneNumber VARCHAR(100) NOT NULL,
+    -> email VARCHAR(100) NOT NULL,
+    -> PRIMARY KEY(id));
+
+
+mysql> DESCRIBE Address_Book;
++-------------+--------------+------+-----+---------+----------------+
+| Field       | Type         | Null | Key | Default | Extra          |
++-------------+--------------+------+-----+---------+----------------+
+| id          | int unsigned | NO   | PRI | NULL    | auto_increment |
+| firstName   | varchar(250) | NO   |     | NULL    |                |
+| lastName    | varchar(250) | NO   |     | NULL    |                |
+| address     | varchar(100) | NO   |     | NULL    |                |
+| city        | varchar(100) | NO   |     | NULL    |                |
+| state       | varchar(100) | NO   |     | NULL    |                |
+| zipCode     | varchar(100) | NO   |     | NULL    |                |
+| phoneNumber | varchar(100) | NO   |     | NULL    |                |
+| email       | varchar(100) | NO   |     | NULL    |                |
++-------------+--------------+------+-----+---------+----------------+
+
+
+UC-3
+//Insert new contact into Address_Book table
+
+mysql> INSERT INTO Address_Book(firstName, lastName, address, city, state, zipCode, phoneNumber, email)
+    -> VALUES (
+    -> 'Deven','Mali','Om Nagar','Dhule','Maharashtra','424005','9405828376','deven@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM Address_Book;
++----+-----------+----------+----------+-------+-------------+---------+-------------+-----------------+
+| id | firstName | lastName | address  | city  | state       | zipCode | phoneNumber | email           |
++----+-----------+----------+----------+-------+-------------+---------+-------------+-----------------+
+|  1 | Deven     | Mali     | Om Nagar | Dhule | Maharashtra | 424005  | 9405828376  | deven@gmail.com |
++----+-----------+----------+----------+-------+-------------+---------+-------------+-----------------+
+
+mysql> INSERT INTO Address_Book(firstName, lastName, address, city, state, zipCode, phoneNumber, email)
+    -> VALUES (
+    -> 'Nilesh','Patil','Sangavi','Pune','Maharashtra','411027','8055609438','malideven@gmail.com');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO Address_Book(firstName, lastName, address, city, state, zipCode, phoneNumber, email)
+    -> VALUES (
+    -> 'Sagar','Chinchole','Dwarka','Nashik','Maharashtra','420001','7276401027','sagar@gmail.com');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT * FROM Address_Book;
++----+-----------+-----------+----------+--------+-------------+---------+-------------+---------------------+
+| id | firstName | lastName  | address  | city   | state       | zipCode | phoneNumber | email               |
++----+-----------+-----------+----------+--------+-------------+---------+-------------+---------------------+
+|  1 | Deven     | Mali      | Om Nagar | Dhule  | Maharashtra | 424005  | 9405828376  | deven@gmail.com     |
+|  2 | Nilesh    | Patil     | Sangavi  | Pune   | Maharashtra | 411027  | 8055609438  | malideven@gmail.com |
+|  3 | Sagar     | Chinchole | Dwarka   | Nashik | Maharashtra | 420001  | 7276401027  | sagar@gmail.com     |
++----+-----------+-----------+----------+--------+-------------+---------+-------------+---------------------+
+
+UC-4
+
+//Edit existing contact person using their name
+mysql> UPDATE Address_Book SET phoneNumber = '9876543210' WHERE firstName = 'Deven';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM Address_Book;
++----+-----------+-----------+----------+--------+-------------+---------+-------------+---------------------+
+| id | firstName | lastName  | address  | city   | state       | zipCode | phoneNumber | email               |
++----+-----------+-----------+----------+--------+-------------+---------+-------------+---------------------+
+|  1 | Deven     | Mali      | Om Nagar | Dhule  | Maharashtra | 424005  | 9876543210  | deven@gmail.com     |
+|  2 | Nilesh    | Patil     | Sangavi  | Pune   | Maharashtra | 411027  | 8055609438  | malideven@gmail.com |
+|  3 | Sagar     | Chinchole | Dwarka   | Nashik | Maharashtra | 420001  | 7276401027  | sagar@gmail.com     |
++----+-----------+-----------+----------+--------+-------------+---------+-------------+---------------------+
+
+
+UC-5
+//Delete person using person's name
+
+mysql> DELETE FROM Address_Book WHERE firstName = 'Sagar';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM Address_Book;
++----+-----------+----------+----------+-------+-------------+---------+-------------+---------------------+
+| id | firstName | lastName | address  | city  | state       | zipCode | phoneNumber | email               |
++----+-----------+----------+----------+-------+-------------+---------+-------------+---------------------+
+|  1 | Deven     | Mali     | Om Nagar | Dhule | Maharashtra | 424005  | 9876543210  | deven@gmail.com     |
+|  2 | Nilesh    | Patil    | Sangavi  | Pune  | Maharashtra | 411027  | 8055609438  | malideven@gmail.com |
++----+-----------+----------+----------+-------+-------------+---------+-------------+---------------------+
+
+
+UC-6
+//Retrieve Person belonging to a City or State from the Address_Book
+
+mysql> SELECT * FROM Address_Book WHERE city = 'Dhule';
++----+-----------+----------+----------+-------+-------------+---------+-------------+-----------------+
+| id | firstName | lastName | address  | city  | state       | zipCode | phoneNumber | email           |
++----+-----------+----------+----------+-------+-------------+---------+-------------+-----------------+
+|  1 | Deven     | Mali     | Om Nagar | Dhule | Maharashtra | 424005  | 9876543210  | deven@gmail.com |
++----+-----------+----------+----------+-------+-------------+---------+-------------+-----------------+
+
+
+mysql> SELECT * FROM Address_Book WHERE state = 'Maharashtra';
++----+-----------+----------+----------+-------+-------------+---------+-------------+---------------------+
+| id | firstName | lastName | address  | city  | state       | zipCode | phoneNumber | email               |
++----+-----------+----------+----------+-------+-------------+---------+-------------+---------------------+
+|  1 | Deven     | Mali     | Om Nagar | Dhule | Maharashtra | 424005  | 9876543210  | deven@gmail.com     |
+|  2 | Nilesh    | Patil    | Sangavi  | Pune  | Maharashtra | 411027  | 8055609438  | malideven@gmail.com |
++----+-----------+----------+----------+-------+-------------+---------+-------------+---------------------+
+
+UC-7
+//understand the size of Address_Book by City and State
+
+mysql> SELECT COUNT(*) FROM Address_Book WHERE city = 'Nashik';
++----------+
+| COUNT(*) |
++----------+
+|        2 |
++----------+
+
+mysql> SELECT COUNT(*) FROM Address_Book WHERE state = 'Maharashtra';
++----------+
+| COUNT(*) |
++----------+
+|        4 |
++----------+
+
+
+mysql> SELECT COUNT(*) FROM Address_Book WHERE state = 'Gujrat';
++----------+
+| COUNT(*) |
++----------+
+|        1 |
++----------+
+
+UC-8
+//retrieve entries sorted alphabetically by Person’s name for a given city
+
+mysql> SELECT firstName, lastName FROM Address_Book ORDER BY firstName ASC;
++-----------+-----------+
+| firstName | lastName  |
++-----------+-----------+
+| Deven     | Mali      |
+| Lalit     | Bhamare   |
+| Nilesh    | Patil     |
+| Sagar     | Chinchole |
+| Umesh     | Patil     |
++-----------+-----------+
+
+mysql> SELECT firstName, lastName FROM Address_Book WHERE city = 'Nashik' ORDER BY firstName ASC;
++-----------+-----------+
+| firstName | lastName  |
++-----------+-----------+
+| Jagdish   | Bhamare   |
+| Sagar     | Chinchole |
+| Umesh     | Patil     |
++-----------+-----------+
+
+UC-9
+//identify each Address Book with name and Type.
+
+mysql> UPDATE Address_Book SET Type = 'friend' WHERE firstName = 'Nilesh';
+mysql> UPDATE Address_Book SET Type = 'family' WHERE firstName = 'Deven';
+mysql> UPDATE Address_Book SET Type = 'friend' WHERE firstName = 'Sagar';
+mysql> UPDATE Address_Book SET Type = 'friend' WHERE firstName = 'Umesh';
+
+
+mysql> SELECT * FROM Address_Book;
++----+-----------+-----------+------------+--------+-------------+---------+-------------+---------------------+--------+
+| id | firstName | lastName  | address    | city   | state       | zipCode | phoneNumber | email               | type   |
++----+-----------+-----------+------------+--------+-------------+---------+-------------+---------------------+--------+
+|  1 | Deven     | Mali      | Om Nagar   | Dhule  | Maharashtra | 424005  | 9876543210  | deven@gmail.com     | family |
+|  2 | Nilesh    | Patil     | Sangavi    | Pune   | Maharashtra | 411027  | 8055609438  | malideven@gmail.com | friend |
+|  4 | Sagar     | Chinchole | Dwarka     | Nashik | Maharashtra | 420001  | 7276401027  | sagar@gmail.com     | friend |
+|  5 | Umesh     | Patil     | Panchavati | Nashik | Maharashtra | 420001  | 7276464640  | sagar@gmail.com     | friend |
+|  6 | Lalit     | Bhamare   | nagar      | Surat  | Gujrat      | 420001  | 7276464640  | sagar@gmail.com     | NULL   |
+|  7 | Jagdish   | Bhamare   | CBS        | Nashik | Maharashtra | 420005  | 9876464640  | sagar@gmail.com     | NULL   |
++----+-----------+-----------+------------+--------+-------------+---------+-------------+---------------------+--------+
+
+UC-10
+//get number of contact persons i.e. count by type
+mysql> SELECT COUNT(*) FROM Address_Book GROUP BY type;
++----------+
+| COUNT(*) |
++----------+
+|        1 |
+|        3 |
+|        2 |
++----------+
+
+
+UC-11
+//add person to both Friend and Family
+
+mysql> INSERT INTO Address_Book(firstName, lastName, address, city, state, zipCode, phoneNumber, email, type)
+    -> VALUES (
+    -> 'Ganesh','Mali','AIR','Dhule','Maharashtra','424005','8055890588','ganesh@gmail.com','family');
+
+mysql> INSERT INTO Address_Book(firstName, lastName, address, city, state, zipCode, phoneNumber, email, type)
+    -> VALUES (
+    -> 'Gaurav','More','CST','Mumbai','Maharashtra','400001','8678890588','gaurav@gmail.com','friend');
+	
+	
+mysql> SELECT * FROM Address_Book;
++----+-----------+-----------+------------+--------+-------------+---------+-------------+---------------------+--------+
+| id | firstName | lastName  | address    | city   | state       | zipCode | phoneNumber | email               | type   |
++----+-----------+-----------+------------+--------+-------------+---------+-------------+---------------------+--------+
+|  1 | Deven     | Mali      | Om Nagar   | Dhule  | Maharashtra | 424005  | 9876543210  | deven@gmail.com     | family |
+|  2 | Nilesh    | Patil     | Sangavi    | Pune   | Maharashtra | 411027  | 8055609438  | malideven@gmail.com | friend |
+|  4 | Sagar     | Chinchole | Dwarka     | Nashik | Maharashtra | 420001  | 7276401027  | sagar@gmail.com     | friend |
+|  5 | Umesh     | Patil     | Panchavati | Nashik | Maharashtra | 420001  | 7276464640  | sagar@gmail.com     | friend |
+|  6 | Lalit     | Bhamare   | nagar      | Surat  | Gujrat      | 420001  | 7276464640  | sagar@gmail.com     | NULL   |
+|  7 | Jagdish   | Bhamare   | CBS        | Nashik | Maharashtra | 420005  | 9876464640  | sagar@gmail.com     | NULL   |
+|  8 | Ganesh    | Mali      | AIR        | Dhule  | Maharashtra | 424005  | 8055890588  | ganesh@gmail.com    | family |
+|  9 | Gaurav    | More      | CST        | Mumbai | Maharashtra | 400001  | 8678890588  | gaurav@gmail.com    | friend |
++----+-----------+-----------+------------+--------+-------------+---------+-------------+---------------------+--------+
+
